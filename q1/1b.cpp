@@ -25,7 +25,7 @@ void solve()
 
     map<string, map<string, int>> women_rank;
 
-    for(const auto& w : women)
+    for(auto& w : women)
     {
         for(int i = 0; i < n; i++)
         {
@@ -37,7 +37,7 @@ void solve()
     map<string, int> next_proposal;
     queue<string> free_men;
 
-    for(const auto& m : men)
+    for(auto& m : men)
     {
         free_men.push(m);
         next_proposal[m] = 0;
@@ -72,7 +72,7 @@ void solve()
         }
     }
 
-    for(auto const& [woman, man] : engaged_to)
+    for(auto& [woman, man] : engaged_to)
     {
         cout << man << " is married to " << woman << endl;
     }
