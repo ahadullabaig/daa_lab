@@ -48,8 +48,6 @@ void solve()
         string m = free_men.front();
         free_men.pop();
 
-        if(next_proposal[m] >= n) continue;
-
         string w = men_prefs[m][next_proposal[m]++];
 
         if(engaged_to.find(w) == engaged_to.end())
