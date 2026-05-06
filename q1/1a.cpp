@@ -13,9 +13,10 @@ void proveBigO()
          << setw(15) << "f(n)=7n+5" 
          << setw(15) << "c*g(n)=8n" 
          << "f(n) <= c*g(n)?" << endl;
+
     cout << "------------------------------------------------------------" << endl;
 
-    for (int n = 10; n <= 30; ++n)
+    for(int n = 10; n <= 30; ++n)
     {
         long fn = 7 * n + 5;
         long cgn = c * n;
