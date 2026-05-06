@@ -14,14 +14,14 @@ void findReachable(int source, map<int, vector<int>>& adj)
     q.push(source);
     visited.insert(source);
 
-    while (!q.empty())
+    while(!q.empty())
     {
         int current = q.front();
         q.pop();
 
-        for (int neighbor : adj[current])
+        for(int neighbor : adj[current])
         {
-            if (visited.find(neighbor) == visited.end())
+            if(visited.find(neighbor) == visited.end())
             {
                 visited.insert(neighbor);
                 q.push(neighbor);
@@ -31,7 +31,7 @@ void findReachable(int source, map<int, vector<int>>& adj)
 
     cout << "Nodes reachable from source " << source << ": ";
     
-    for (int node : visited)
+    for(int node : visited)
     {
         cout << node << " ";
     }
