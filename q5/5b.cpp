@@ -6,37 +6,42 @@
 
 using namespace std;
 
-int partition(vector<int>& arr, int low, int high)
+int partition(vector<int>& arr, int left, int right)
 {
-    int pivot = arr[high]; 
-    int i = (low - 1); 
+    int pivot = arr[right];
 
-    for (int j = low; j <= high - 1; j++)
+    int i = (left - 1); 
+
+    for(int j = left; j <= right - 1; j++)
     {
-        if (arr[j] < pivot)
+        if(arr[j] < pivot)
         {
-            i++; 
+            i++;
             swap(arr[i], arr[j]);
         }
     }
-    swap(arr[i + 1], arr[high]);
+
+    swap(arr[i+1], arr[right]);
+    
     return (i + 1);
 }
 
-void quickSort(vector<int>& arr, int low, int high)
+void quickSort(vector<int>& arr, int left, int right)
 {
-    if (low < high)
+    if(left < right)
     {
-        int pi = partition(arr, low, high);
+        int pi = partition(arr, left, right);
 
-        quickSort(arr, low, pi - 1);
-        quickSort(arr, pi + 1, high);
+        quickSort(arr, left, pi - 1);
+
+        quickSort(arr, pi + 1, right);
     }
 }
 
 void printArray(const vector<int>& arr)
 {
     for (int x : arr) cout << x << " ";
+
     cout << endl;
 }
 
@@ -52,12 +57,14 @@ int main()
     vector<int> data(n);
 
     srand(time(0));
-    for(int i = 0; i < n; i++)
+
+    for(int i=0; i<n; i++)
     {
         data[i] = rand() % 10000; 
     }
 
-    if (n <= 20) {
+    if(n <= 20)
+    {
         cout << "\nUnsorted Array: " << endl;
         printArray(data);
     }
@@ -66,7 +73,8 @@ int main()
     quickSort(data, 0, n - 1);
     clock_t end = clock();
 
-    if (n <= 20) {
+    if (n <= 20)
+    {
         cout << "\nSorted Array: " << endl;
         printArray(data);
     }
