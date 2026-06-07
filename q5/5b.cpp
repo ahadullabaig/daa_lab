@@ -1,65 +1,80 @@
 #include <iostream>
 #include <vector>
-#include <queue>
-#include <map>
+#include <random>
+#include <ctime>
+#include <iomanip>
 
 using namespace std;
 
-bool isBipartite(int startNode, map<int, vector<int>>& adj)
+int partition(vector<int>& arr, int low, int high)
 {
-    map<int, int> color;
+    int pivot = arr[high]; 
+    int i = (low - 1); 
 
-    queue<int> q;
-
-    q.push(startNode);
-
-    color[startNode] = 1; 
-
-    while(!q.empty())
+    for (int j = low; j <= high - 1; j++)
     {
-        int curr = q.front();
-    
-        q.pop();
-
-        for(int neighbor : adj[curr])
+        if (arr[j] < pivot)
         {
-            if(color.find(neighbor) == color.end() || color[neighbor] == 0)
-            {
-                color[neighbor] = -color[curr];
-                q.push(neighbor);
-            }
-            else if(color[neighbor] == color[curr])
-            {
-                return false;
-            }
+            i++; 
+            swap(arr[i], arr[j]);
         }
     }
+    swap(arr[i + 1], arr[high]);
+    return (i + 1);
+}
 
-    return true;
+void quickSort(vector<int>& arr, int low, int high)
+{
+    if (low < high)
+    {
+        int pi = partition(arr, low, high);
+
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+}
+
+void printArray(const vector<int>& arr)
+{
+    for (int x : arr) cout << x << " ";
+    cout << endl;
 }
 
 int main()
 {
-    map<int, vector<int>> adj;
-    
-    adj[1] = {2, 3};
-    adj[2] = {1, 3, 4, 5};
-    adj[3] = {1, 2, 6, 7};
-    adj[4] = {2, 5, 8, 9};
-    adj[5] = {2, 4, 9};
-    adj[6] = {3, 7};
-    adj[7] = {3, 6};
-    adj[8] = {4, 9};
-    adj[9] = {4, 5, 8, 10};
-    adj[10] = {9};
+    int n;
 
-    if (isBipartite(1, adj))
+    cout << "Enter number of random elements to sort: ";
+    cin >> n;
+    
+    if (n <= 0) return 0;
+
+    vector<int> data(n);
+
+    srand(time(0));
+    for(int i = 0; i < n; i++)
     {
-        cout << "The graph is Bipartite." << endl;
+        data[i] = rand() % 10000; 
     }
-    else {
-        cout << "The graph is NOT Bipartite (contains odd cycles)." << endl;
+
+    if (n <= 20) {
+        cout << "\nUnsorted Array: " << endl;
+        printArray(data);
     }
+
+    clock_t start = clock();
+    quickSort(data, 0, n - 1);
+    clock_t end = clock();
+
+    if (n <= 20) {
+        cout << "\nSorted Array: " << endl;
+        printArray(data);
+    }
+
+    double time_taken = double(end - start) / CLOCKS_PER_SEC;
+
+    cout << "\nSuccessfully sorted " << n << " elements." << endl;
+    cout << "Execution time: " << fixed << setprecision(6) << time_taken << " seconds" << endl;
 
     return 0;
 }
