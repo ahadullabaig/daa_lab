@@ -14,7 +14,7 @@ void bellmanFord(vector<Edge>& edges, int src, int V)
 
     dist[src] = 0;
 
-    for(int i=1; i <= (V - 1); i++)
+    for(int i=0; i < (V - 1); i++)
     {
         for(auto e : edges)
         {
@@ -50,17 +50,28 @@ void bellmanFord(vector<Edge>& edges, int src, int V)
 
 int main()
 {
-    int V = 5;
-    
+    int V = 6;
+
     vector<Edge> edges = {
-        {0, 1, -1}, {0, 2, 4},
-        {1, 2, 3}, {1, 3, 2}, {1, 4, 2},
-        {3, 2, 5}, {3, 1, 1}, {4, 3, -3}
+        {0, 1, -4}, // a -> b
+        {0, 5, -3}, // a -> t
+
+        {1, 3, -1}, // b -> d
+        {1, 4, -2}, // b -> e
+
+        {3, 0, 6},  // d -> a
+        {3, 5, 4},  // d -> t
+
+        {4, 2, -3}, // e -> c
+        {4, 5, 2},  // e -> t
+
+        {2, 1, 8},  // c -> b
+        {2, 5, 3}   // c -> t
     };
-    
-    int src = 0;
-    
+
+    int src = 0; // a
+
     bellmanFord(edges, src, V);
-    
+
     return 0;
 }
