@@ -69,8 +69,6 @@ int countInversions(vector<int>& arr, int left, int right)
 
 int main()
 {
-    srand(time(0));
-
     int n = 8;
 
     for(int i = 1; i <= 3; i++)
