@@ -16,9 +16,9 @@ bool compareRequests(Request a, Request b)
     return a.finish < b.finish;
 }
 
-int latestNonConflict(const vector<Request>& reqs, int i)
+int latestNonConflict(vector<Request>& reqs, int i)
 {
-    for (int j = i - 1; j >= 0; j--)
+    for (int j = i-1; j >= 0; j--)
     {
         if (reqs[j].finish <= reqs[i].start) return j;
     }
@@ -36,18 +36,18 @@ void maxProfit(vector<Request>& reqs)
     
     dp[0] = reqs[0].value;
     
-    for (int i = 1; i < n; i++)
+    for(int i=1; i<n; i++)
     {
-        int inclProfit = reqs[i].value;
+        int profit = reqs[i].value;
 
         int l = latestNonConflict(reqs, i);
     
-        if (l != -1) inclProfit += dp[l];
+        if (l != -1) profit += dp[l];
         
-        dp[i] = max(inclProfit, dp[i - 1]);
+        dp[i] = max(profit, dp[i-1]);
     }
     
-    cout << "Maximum profit for the drama venue: " << dp[n - 1] << endl;
+    cout << "Maximum profit for the drama venue: " << dp[n-1] << endl;
 }
 
 int main()
