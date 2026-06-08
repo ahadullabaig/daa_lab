@@ -8,55 +8,59 @@ struct Edge {
     int src, dest, weight;
 };
 
-void bellmanFord(vector<Edge>& edges, int V, int E, int src)
+void bellmanFord(vector<Edge>& edges, int src, int V)
 {
     vector<int> dist(V, INT_MAX);
+
     dist[src] = 0;
 
-    // Relax all edges |V| - 1 times
-    for (int i = 1; i <= V - 1; i++) {
-        for (int j = 0; j < E; j++) {
-            int u = edges[j].src;
-            int v = edges[j].dest;
-            int weight = edges[j].weight;
-            if (dist[u] != INT_MAX && dist[u] + weight < dist[v]) {
-                dist[v] = dist[u] + weight;
+    for(int i=1; i <= (V - 1); i++)
+    {
+        for(auto e : edges)
+        {
+            if (dist[e.src] != INT_MAX &&
+                dist[e.src] + e.weight < dist[e.dest])
+            {
+                dist[e.dest] = dist[e.src] + e.weight;
             }
         }
     }
 
-    // Check for negative-weight cycles
-    for (int j = 0; j < E; j++) {
-        int u = edges[j].src;
-        int v = edges[j].dest;
-        int weight = edges[j].weight;
-        if (dist[u] != INT_MAX && dist[u] + weight < dist[v]) {
-            cout << "Graph contains negative weight cycle" << endl;
+    for(auto e : edges)
+    {
+        if (dist[e.src] != INT_MAX &&
+            dist[e.src] + e.weight < dist[e.dest])
+        {
+            cout << "Graph contains a negative-weight cycle!\n";
             return;
         }
     }
 
-    cout << "Vertex Distance from Source (" << src << ")" << endl;
-    for (int i = 0; i < V; i++) {
-        cout << i << "\t\t";
-        if (dist[i] == INT_MAX)
-            cout << "INF" << endl;
-        else
-            cout << dist[i] << endl;
+    cout << "\nShortest distances from vertex " << src << ":\n";
+
+    for(int v=0; v<V; v++)
+    {
+        cout << v << " = ";
+
+        if (dist[v] == INT_MAX) cout << "INF\n";
+
+        else cout << dist[v] << "\n";
     }
 }
 
 int main()
 {
-    int V = 5; 
-    int E = 8; 
+    int V = 5;
+    
     vector<Edge> edges = {
         {0, 1, -1}, {0, 2, 4},
         {1, 2, 3}, {1, 3, 2}, {1, 4, 2},
         {3, 2, 5}, {3, 1, 1}, {4, 3, -3}
     };
-
-    bellmanFord(edges, V, E, 0);
-
+    
+    int src = 0;
+    
+    bellmanFord(edges, src, V);
+    
     return 0;
 }
