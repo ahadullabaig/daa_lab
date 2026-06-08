@@ -10,8 +10,7 @@ int minVertex(vector<int>& minWt, vector<bool>& visited, int V)
 
     for(int v=0; v<V; v++)
     {
-        if (!visited[v] &&
-            minWt[v] < min)
+        if (!visited[v] && minWt[v] < min)
         {
             min = minWt[v];
             min_index = v;
@@ -53,13 +52,13 @@ void prims(vector<vector<int>>& graph, int src, int V)
     cout << "\nMinimum Spanning Tree (Prim's Algorithm):" << endl;
     cout << "Edge \tWeight" << endl;
     
-    for(int i=0; i<V; i++)
+    for(int v=0; v<V; v++)
     {
-        if(parent[i] != -1)
+        if(parent[v] != -1)
         {
-            cout << parent[i] << " - " << i << " \t" << minWt[i] << endl;
+            cout << parent[v] << " - " << v << " \t" << minWt[v] << endl;
 
-            minCost += minWt[i];
+            minCost += minWt[v];
         }
     }
     
