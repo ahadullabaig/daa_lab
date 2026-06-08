@@ -78,14 +78,11 @@ int main()
         shuffle(playlist.begin(), playlist.end(), mt19937(random_device()()));
 
         cout << "User " << i << " Playlist: ";
-    
         for (int s : playlist) cout << s << " ";
         
-        vector<int> temp = playlist;
-
-        int inv_count = countInversions(temp, 0, n - 1);
+        int count = countInversions(playlist, 0, n - 1);
         
-        cout << "\nInversion Count: " << inv_count << endl << endl;
+        cout << "\nInversion Count: " << count << endl << endl;
     }
 
     return 0;
