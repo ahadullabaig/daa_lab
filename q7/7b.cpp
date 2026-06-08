@@ -6,13 +6,11 @@ using namespace std;
 
 int minVertex(vector<int>& minWt, vector<bool>& visited, int V)
 {
-    int min = INT_MAX;
-
-    int min_index;
+    int min = INT_MAX, min_index = -1;
 
     for(int v=0; v<V; v++)
     {
-        if (visited[v] == false &&
+        if (!visited[v] &&
             minWt[v] < min)
         {
             min = minWt[v];
@@ -23,7 +21,7 @@ int minVertex(vector<int>& minWt, vector<bool>& visited, int V)
     return min_index;
 }
 
-void prims(vector<vector<int>>& edges, int V, int src)
+void prims(vector<vector<int>>& graph, int src, int V)
 {
     vector<int> parent(V);
     vector<int> minWt(V, INT_MAX);
@@ -32,7 +30,7 @@ void prims(vector<vector<int>>& edges, int V, int src)
     minWt[src] = 0;
     parent[src] = -1;
 
-    for(int count = 0; count < (V-1); count++)
+    for(int i=0; i < (V-1); i++)
     {
         int u = minVertex(minWt, visited, V);
 
@@ -40,12 +38,12 @@ void prims(vector<vector<int>>& edges, int V, int src)
 
         for(int v=0; v<V; v++)
         {
-            if (edges[u][v] != 0 &&
-                visited[v] == false &&
-                edges[u][v] < minWt[v])
+            if (!visited[v] &&
+                graph[u][v] &&
+                graph[u][v] < minWt[v])
             {
                 parent[v] = u;
-                minWt[v] = edges[u][v];
+                minWt[v] = graph[u][v];
             }
         }
     }
@@ -59,9 +57,9 @@ void prims(vector<vector<int>>& edges, int V, int src)
     {
         if(parent[i] != -1)
         {
-            cout << parent[i] << " - " << i << " \t" << edges[i][parent[i]] << endl;
+            cout << parent[i] << " - " << i << " \t" << minWt[i] << endl;
 
-            minCost += edges[i][parent[i]];
+            minCost += minWt[i];
         }
     }
     
@@ -72,7 +70,7 @@ int main()
 {
     int V = 5;
     
-    vector<vector<int>> edges = {
+    vector<vector<int>> graph = {
         {0, 2, 0, 6, 0},
         {2, 0, 3, 8, 5},
         {0, 3, 0, 0, 7},
@@ -83,7 +81,8 @@ int main()
     int src = 0;
     
     cout << "Starting Prim's MST from node " << src << endl;
-    prims(edges, V, src);
+
+    prims(graph, src, V);
 
     return 0;
 }
