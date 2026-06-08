@@ -6,54 +6,62 @@
 
 using namespace std;
 
-long long mergeAndCount(vector<int>& arr, int l, int m, int r)
+int mergeAndCount(vector<int>& arr, int left, int mid, int right)
 {
-    int n1 = m - l + 1;
-    int n2 = r - m;
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
 
-    vector<int> left(n1), right(n2);
+    vector<int> L(n1), R(n2);
 
-    for(int i = 0; i < n1; i++) left[i] = arr[l + i];
+    for(int i = 0; i < n1; i++) L[i] = arr[left + i];
+    for(int i = 0; i < n2; i++) R[i] = arr[mid + 1 + i];
 
-    for(int i = 0; i < n2; i++) right[i] = arr[m + 1 + i];
+    int count = 0;
 
-    long long count = 0;
-
-    int i = 0, j = 0, k = l;
+    int i = 0, j = 0, k = left;
 
     while(i < n1 && j < n2)
     {
-        if(left[i] <= right[j])
+        if(L[i] <= R[j])
         {
-            arr[k++] = left[i++];
+            arr[k] = L[i];
+            i++; k++;
         }
         else
         {
-            arr[k++] = right[j++];
+            arr[k] = R[j];
+            j++; k++;
             count += (n1 - i); 
         }
     }
 
-    while(i < n1) arr[k++] = left[i++];
+    while(i < n1)
+    {
+        arr[k] = L[i];
+        i++; k++;
+    }
 
-    while(j < n2) arr[k++] = right[j++];
+    while(j < n2)
+    {
+        arr[k] = R[j];
+        j++; k++;
+    }
 
     return count;
 }
 
-long long countInversions(vector<int>& arr, int l, int r)
+int countInversions(vector<int>& arr, int left, int right)
 {
-    long long count = 0;
+    int count = 0;
 
-    if(l < r)
+    if(left < right)
     {
-        int m = l + (r - l) / 2;
+        int mid = (right + left) / 2;
     
-        count += countInversions(arr, l, m);
+        count += countInversions(arr, left, mid);
+        count += countInversions(arr, mid + 1, right);
     
-        count += countInversions(arr, m + 1, r);
-    
-        count += mergeAndCount(arr, l, m, r);
+        count += mergeAndCount(arr, left, mid, right);
     }
     
     return count;
@@ -63,25 +71,23 @@ int main()
 {
     srand(time(0));
 
-    int num_songs = 8;
+    int n = 8;
 
-    for (int user = 1; user <= 3; user++)
+    for(int i = 1; i <= 3; i++)
     {
         vector<int> playlist = {1, 2, 3, 4, 5, 6, 7, 8};
     
         shuffle(playlist.begin(), playlist.end(), mt19937(random_device()()));
 
-        cout << "User " << user << " Playlist: ";
+        cout << "User " << i << " Playlist: ";
     
         for (int s : playlist) cout << s << " ";
         
         vector<int> temp = playlist;
 
-        long long inv_count = countInversions(temp, 0, num_songs - 1);
+        int inv_count = countInversions(temp, 0, n - 1);
         
-        cout << "\nInversion Count: " << inv_count << endl;
-        
-        cout << "-----------------------------------" << endl;
+        cout << "\nInversion Count: " << inv_count << endl << endl;
     }
 
     return 0;
