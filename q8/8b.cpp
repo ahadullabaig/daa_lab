@@ -17,7 +17,9 @@ int findParent(int i, vector<int>& parent)
 {
     if (parent[i] == i) return i;
 
-    return parent[i] = findParent(parent[i], parent);
+    parent[i] = findParent(parent[i], parent);
+
+    return parent[i];
 }
 
 void kruskals(vector<Edge>& edges, int V)
@@ -26,7 +28,7 @@ void kruskals(vector<Edge>& edges, int V)
     
     vector<int> parent(V);
 
-    for (int v=0; v<V; v++)
+    for(int v=0; v<V; v++)
     {
         parent[v] = v;
     }
