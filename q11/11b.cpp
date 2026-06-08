@@ -38,14 +38,9 @@ void bellmanFord(vector<Edge>& edges, int src, int V)
 
     cout << "\nShortest distances from vertex " << src << ":\n";
 
-    for(int v=0; v<V; v++)
-    {
-        cout << v << " = ";
-
-        if (dist[v] == INT_MAX) cout << "INF\n";
-
-        else cout << dist[v] << "\n";
-    }
+    for(int v=0; v<V; v++) cout << v << " = " << dist[v] << "\n";
+    
+    cout << endl;
 }
 
 int main()
