@@ -66,14 +66,17 @@ void kruskals(vector<Edge>& edges, int V)
 
 int main()
 {
-    int V = 5;
+    int V = 6;
     
     vector<Edge> edges = {
-        {0, 1, 10},
-        {0, 2, 6},
-        {0, 3, 5},
-        {1, 3, 15},
-        {2, 3, 4}
+        {1, 5, 5},
+        {1, 2, 10},
+        {5, 2, 7},
+        {5, 3, 6},
+        {5, 4, 3},
+        {4, 3, 2},
+        {4, 2, 6},
+        {3, 2, 1}
     };
     
     kruskals(edges, V);
